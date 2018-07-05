@@ -1,0 +1,79 @@
+﻿git config --global user.name "your name"
+git config --global user.email "email@example.com"
+
+git init //把当前目录变为git管理的仓库
+
+//需要分布式管理的文件必须放在变为仓库的文件夹下
+git add filename
+git commit -m "message"
+
+git status //当前仓库的状态
+git diff filename // git status提示有修改 diff具体修改的内容
+
+git log //file修改记录
+git log --pretty=oneline
+
+//HEAD指向哪个版本 就定位哪个版本
+git reset --hard HEAD //把当前文件回退到上一步 HEAD^是上一个版本 ^^上上版本 ^^^
+
+//stage master 必须先 git add 然后 git commit
+
+git checkout -- filename
+//把filename文件在工作区的修改全部撤销，两种情况：
+//file修改后还没放到暂存区，撤销操作回到和版本库一样的状态
+//已经添加到暂存区，又做了修改，撤销操作回到添加到暂存区后的状态
+//总之，回到git commit或者git add的状态。
+//如果推送到远程版本库，you finish！
+
+删除
+ls
+git add test.txt
+git commit -m "add test.txt"
+rm test.txt
+git rm test.txt
+git commit -m "remove test.txt"
+
+ 
+创建SSH key
+ssh-keygen -t rsa -C "youremail@example.com"
+//id_rsa私钥 id_rsa.pub公钥
+//github添加ssh Add SSH key 在Key粘id_rsa.pub的内容
+
+//git远程库名字origin 本地仓库关联github远程仓库
+git remote add origin git@github.com:hani02/learngit.git
+git push -u origin master   //把当前分支master推送到远程
+
+git remote add origin git@server-name:path/repo-name.git //关联远程库
+git push -u origin master //第一次推送master分支的所有内容
+git push origin master //之后推送最新修改
+
+//从远程库克隆
+git clone git@github.com:hani02/gitskills.git
+
+//创建切换分支
+git checkout -b dev
+//相当于
+git branch dev
+git checkout dev
+
+
+git merge dev  //在当前分支合并另一个分支
+
+git branch //查看分支
+git branch name //创建分支
+git checkout name  //切换分支
+git checkout -b name  //创建并切换分支
+git merge name //合并某分支到当前分支
+git branch -d name //删除分支 -D强行删除
+
+//两个分支修改内容有冲突时 需要手动修改在合并
+git log --graph //查看合并分支图
+
+//合并分支时候 加上 --no-ff 参数就可以用普通模式合并，可以看出来谁做过合并
+
+
+//BUG分支
+当前分支工作未完成，并且不想commit
+git stash //把当前工作现场储存起来
+git stash apply  //恢复工作 但是stash内容得自己删除 git stash drop
+git stash pop //恢复工作 同时删除stash
